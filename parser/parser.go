@@ -17,7 +17,7 @@ type Parser interface {
 
 // AvailableParsers is an array of default parsers within the package
 var AvailableParsers = []Parser{
-	new(markdown.Markdown),
+	&markdown.Markdown{},
 }
 
 // GetParser helps find the appropiate parser for a file

@@ -7,7 +7,7 @@ We need to be able to parse a Markdown file and pull out the proper properties.
 
  - [x] H1 equivalent block (both the *Setext* and *atx* styles) is the `title` property
  - [x] H2 equivalent blocks (both the *Setext* and *atx* styles) are property names
- - [ ] Blocks within H2 are property values
+ - [x] Blocks within H2 are property values
 
 Comments
 --------
@@ -20,7 +20,7 @@ Different regular expressions:
 
 Status
 ------
-In Progress
+Testing
 
 Assigned
 --------
