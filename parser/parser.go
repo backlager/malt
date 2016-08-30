@@ -4,7 +4,6 @@ import (
 	"errors"
 	"io"
 	"os"
-	"time"
 
 	"github.com/backlager/malt/ingredient"
 	"github.com/backlager/malt/parser/markdown"
@@ -44,13 +43,13 @@ func Read(filePath string) (ingredient.Ingredient, error) {
 	// Try and find a suitable parser for the file
 	p, err := GetParser(filePath, AvailableParsers...)
 	if err != nil {
-		return nil, err
+		return ingredient.Ingredient{}, err
 	}
 
 	// Open the file
 	f, err := os.Open(filePath)
 	if err != nil {
-		return nil, err
+		return ingredient.Ingredient{}, err
 	}
 	defer f.Close()
 
@@ -59,41 +58,10 @@ func Read(filePath string) (ingredient.Ingredient, error) {
 }
 
 // Check to see if the file exists and is accessible
-// If it does not exist we create it
 func fileExists(fileName string) bool {
-	if _, err := os.Stat(fileName); os.IsNotExist(err) {
-		_, err = os.Create(fileName)
-		if err != nil {
-			return false
-		}
+	if _, err := os.Stat(fileName); err != nil {
+		return false
 	}
 
 	return true
-}
-
-// Parse the given string to extract a proper date
-func parseDate(in string) (time.Time, error) {
-	formats := []string{
-		"2006-01-02",
-		"2006/01/02",
-		"2006-1-2",
-		"2006/1/2",
-		"01-02-2006",
-		"01/02/2006",
-		"1-2-2006",
-		"1/2/2006",
-		"Jan 2, 2006",
-		"Jan 02, 2006",
-		"2 Jan 2006",
-		"02 Jan 2006",
-	}
-
-	for _, f := range formats {
-		d, err := time.Parse(f, in)
-		if err == nil {
-			return d, nil
-		}
-	}
-
-	return time.Now().UTC(), errors.New("No valid date provided")
 }
