@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/backlager/malt/ingredient"
+	"github.com/backlager/malt/parser/json"
 	"github.com/backlager/malt/parser/markdown"
 )
 
@@ -18,6 +19,7 @@ type Parser interface {
 // AvailableParsers is an array of default parsers within the package
 var AvailableParsers = []Parser{
 	&markdown.Markdown{},
+	&json.JSON{},
 }
 
 // GetParser helps find the appropiate parser for a file
